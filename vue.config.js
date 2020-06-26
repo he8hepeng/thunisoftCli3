@@ -1,24 +1,26 @@
 /*
  * @Author: HePeng
  * @Date: 2020-04-27 09:39:43
- * @Last Modified by: HePeng
- * @Last Modified time: 2020-06-01 09:24:15
+ * @Last Modified by: hepeng
+ * @Last Modified time: 2020-06-26 09:42:02
  */
 const webpack = require('webpack')
 const path = require('path')
-const IS_PRODUCTION = process.env.NODE_ENV == 'production' // 正式环境
-const CompressionPlugin = require('compression-webpack-plugin') // 压缩css js html
+// const CompressionPlugin = require('compression-webpack-plugin') // 压缩css js html
 const IS_PROD = ['production', 'test'].includes(process.env.NODE_ENV) // 修复热更新
 // const TerserPlugin = require("terser-webpack-plugin"); // 去除console debug
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin') // 去除console debug
 // 选其一
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin') // dll优化
 module.exports = {
+  lintOnSave: true, // 是否lint检查 (建议开启)
   publicPath: './',
-  // 输出文件目录
-  outputDir: 'dist',
-  // assetsDir: 'static', // 放置生成的静态资源 (js、css、img、fonts) 的 (相对于 outputDir 的) 目录。
-  lintOnSave: true, // 是否lint错误
+  outputDir: 'dist', // 输出文件目录
+  assetsDir: 'static', // 放置生成的静态资源 (js、css、img、fonts) 的 (相对于 outputDir 的) 目录。
+  indexPath: 'index.html', // 修改打包的默认html文件路径
+  filenameHashing: true, // 文件名哈希值 (当你不能使用默认html时 改为false)
+  // 当您测试使用下载时 请删除Mock依赖 (main.js vue.config.js) 他会影响您的下载功能
+  productionSourceMap: true, // false时 会加快您的打包速度 但无法在控制台定位错误（慎用）
   devServer: {
     proxy: {
       // proxy all requests starting with /api to jsonplaceholder
@@ -38,7 +40,7 @@ module.exports = {
     port: '8080'
   },
   // 修复ie10 app.js报错问题
-  transpileDependencies: ['normalize-url', 'mini-css-extract-plugin', 'prepend-http', 'sort-keys'],
+  transpileDependencies: ['normalize-url', 'mini-css-extract-plugin', 'prepend-http', 'sort-keys'], // 当您的依赖 需要通过babel显式转译时 放到这里
   chainWebpack: config => {
     const types = ['vue-modules', 'vue', 'normal-modules', 'normal']
     types.forEach(type => addStyleResource(config.module.rule('less').oneOf(type)))
@@ -47,37 +49,20 @@ module.exports = {
       .set('@assets', resolvePath('src/assets'))
       .set('@common', resolvePath('src/components/common')) // 公共模块
     config.resolve.symlinks(true)
-    // // 解决ie11兼容ES6
-    // config.entry('main').add('babel-polyfill')
-    if (IS_PRODUCTION) {
-      /** gzip 压缩 */
-      config
-        .plugin('compressionPlugin')
-        .use(CompressionPlugin)
-        .tap(() => [
-          {
-            test: /\.js$|\.html$|\.css/, //匹配文件名
-            threshold: 10240, //超过10k进行压缩
-            deleteOriginalAssets: false //是否删除源文件
-          }
-        ]);
-      /** 去掉console.log debugger sourceMap*/
-      // config.optimization.minimizer([
-      //   new TerserPlugin({
-      //     cache: true,
-      //     parallel: true,
-      //     sourceMap: true,
-      //     terserOptions: {
-      //       compress: {
-      //       // 关键代码
-      //         warnings: true,
-      //         drop_debugger: true,
-      //         drop_console: true
-      //       }
-      //     }
-      //   })
-      // ])
-    }
+    // if (IS_PROD) {
+    //   // 会生成 gz依赖压缩包 大大增加您的加载速度 (需要在nginx进行配置 https://jingyan.baidu.com/article/454316ab29d0c0f7a7c03a1f.html 选用 (不是想优化首屏加载速度 不建议使用))
+    //   /** gzip 压缩 */
+    //   config
+    //     .plugin('compressionPlugin')
+    //     .use(CompressionPlugin)
+    //     .tap(() => [
+    //       {
+    //         test: /\.js$|\.html$|\.css/, // 匹配文件名
+    //         threshold: 10240, // 超过10k进行压缩
+    //         deleteOriginalAssets: false // 是否删除源文件
+    //       }
+    //     ])
+    // }
   },
   css: {
     loaderOptions: {
@@ -85,7 +70,8 @@ module.exports = {
         javascriptEnabled: true
       }
     },
-    extract: IS_PROD // 是否将组件中的 CSS 提取至一个独立的 CSS 文件中 (而不是动态注入到 JavaScript 中的 inline 代码)。 生产环境下是 true，开发环境下是 false
+    extract: IS_PROD, // 是否将组件中的 CSS 提取至一个独立的 CSS 文件中 (而不是动态注入到 JavaScript 中的 inline 代码)。 生产环境下是 true，开发环境下是 false
+    sourceMap: false // 是否为 CSS 开启 source map。设置为 true 之后可能会影响构建的性能。
   },
   configureWebpack: (config) => {
     config.plugins.push(
@@ -110,7 +96,7 @@ module.exports = {
         outputPath: './vendor'
       })
     )
-    if (process.env.NODE_ENV === "production") {
+    if (IS_PROD) {
       config.plugins.push(
         new UglifyJsPlugin({
           uglifyOptions: {
