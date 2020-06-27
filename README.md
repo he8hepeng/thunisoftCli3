@@ -23,6 +23,14 @@ npm run serve
 ```
 
 ### 更新说明
+#### 0.2.1
+```
+webpack 打包自动生成zip包
+webpack 全局引入依赖
+webpack 静态资源gz优化 配合nginx提升首屏加载速度
+axios tap token长连
+解决一些bug
+```
 #### 0.2.0
 ```
 BATE版本

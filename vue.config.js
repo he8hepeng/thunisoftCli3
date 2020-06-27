@@ -10,6 +10,7 @@ const path = require('path')
 const IS_PROD = ['production', 'test'].includes(process.env.NODE_ENV) // 修复热更新
 // const TerserPlugin = require("terser-webpack-plugin"); // 去除console debug
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin') // 去除console debug
+const ZipPlugin = require('zip-webpack-plugin') // 当需要手动打包 会自动生成一个zip的dist
 // 选其一
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin') // dll优化
 module.exports = {
@@ -75,13 +76,17 @@ module.exports = {
   },
   configureWebpack: (config) => {
     config.plugins.push(
-      // 引用snap 或 jq 看是否需要
-      // new webpack.ProvidePlugin({
-      //   Snap:
-      //     'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js',
-      //     'window.snapsvg':
-      //     'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js'
-      // }),
+      // （全局引用 引用后不在页面import）
+      new webpack.ProvidePlugin({
+        // Snap: 'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js',
+        // 'window.snapsvg': 'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js',
+        // $: 'jquery',
+        // jQuery: 'jquery'
+      }),
+      new ZipPlugin({
+        path: path.join(__dirname, './dist'),
+        filename: 'dist.zip'
+      }),
       new webpack.DllReferencePlugin({
         context: process.cwd(),
         manifest: require('./public/vendor/vendor-manifest.json')

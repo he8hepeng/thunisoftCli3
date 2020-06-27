@@ -8,9 +8,6 @@ import cookies from '../../package/cookie.js'
 export default {
   state: {
     userInfo: {
-      userName: ''
-    },
-    userInfo: {
       corpId: 100000,
       corpName: '浙江',
       deptId: '',
@@ -20,7 +17,7 @@ export default {
     indexActive: 'example' // 导航index 当页面刷新 导航自动定位
   },
   getters: {
-    getCookie () {
+    getCookie: () => () => {
       return cookies.getCookie('token') // 从cookie 返回token
     },
     getUserInfo: state => {

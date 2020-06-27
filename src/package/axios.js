@@ -140,9 +140,9 @@ axios.interceptors.request.use(config => {
     })
   }
   modelIndex++
-  config.headers.common['token'] = store.getters.getCookie // 每次发送之前 从vuex拿token携带
+  config.headers.common['token'] = store.getters.getCookie() // 每次发送之前 从vuex拿token携带
   // config.headers.common['User-Info'] = store.getters.getUserInfo // 将用户信息等数据 放到header中发给后台
-  if (config.method == 'get') { // 发现ie下有从缓存拿数据的bug 所以在所有请求加上时间戳
+  if (config.method === 'get') { // 发现ie下有从缓存拿数据的bug 所以在所有请求加上时间戳
     config.params = {
       _t: Date.parse(new Date()) / 1000,
       ...config.params
