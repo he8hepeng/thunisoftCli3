@@ -37,34 +37,34 @@ function filterNull (o) {
  * @param {any} success 正确回调
  * @param {any} failure 错误回调
  */
-function apiAxios(method, url, data, params, success, failure) {
-  if (params && typeof params !== "string") {
-    params = filterNull(params);
+function apiAxios (method, url, data, params, success, failure) {
+  if (params && typeof params !== 'string') {
+    params = filterNull(params)
   }
   axios({
-    method: method === "postG" ? "POST" : method,
+    method: method === 'postG' ? 'POST' : method,
     url: url,
     data: data || null,
     params: params || null,
     withCredentials: false,
     headers: {
-      "X-HTTP-Method-Override": method === "postG" ? "get" : "",
-      "Content-Type": "application/json"
+      'X-HTTP-Method-Override': method === 'postG' ? 'get' : '',
+      'Content-Type': 'application/json'
     }
   })
-    .then(function(res) {
-      // if (res.status === 204) {
-      //   res.data = {
-      //     message: "成功"
-      //   };
-      // }
-      success(res.data);
-    })
-    .catch(function(err) {
-      if (failure) {
-        failure(err);
-      }
-    });
+  .then(function(res) {
+    // if (res.status === 204) {
+    //   res.data = {
+    //     message: '成功'
+    //   }
+    // }
+    success(res.data)
+  })
+  .catch(function(err) {
+    if (failure) {
+      failure(err)
+    }
+  })
 }
 
 /**
@@ -190,7 +190,7 @@ function closeLoding () {
     if (loadingInstance) {
       if (repeatToken) {
         repeatToken = false
-        // validateToken();
+        // validateToken()
       }
       loadingInstance.close()
     }
