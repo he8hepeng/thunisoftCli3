@@ -190,7 +190,7 @@ function closeLoding () {
     if (loadingInstance) {
       if (repeatToken) {
         repeatToken = false
-        // validateToken();
+        // validateToken()
       }
       loadingInstance.close()
     }
