@@ -30,8 +30,8 @@ export default {
       message5: {
         a: 2
       },
-      message6: () => {
-        console.log(this.$data)
+      message6: (res) => {
+        console.log(this.$data, res)
       }
     }
   },
@@ -68,8 +68,8 @@ export default {
     ...mapActions(['setUser']),
     asyncPromise () {
       return new Promise((resolve, reject) => {
-        this.axios.get(this.url['userInfo'], { a: 2 }, res => {
-          resolve(res.content)
+        this.axios.get(this.url.userInfo, {}, { a: 2 }, res => {
+          resolve(res)
         })
       })
     },

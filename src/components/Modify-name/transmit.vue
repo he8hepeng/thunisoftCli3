@@ -48,7 +48,7 @@ export default {
   },
   inject: ['parentClick'],
   mounted () {
-    this.message6()
+    this.message6(123321)
   },
   methods: {
     submit () {

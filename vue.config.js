@@ -2,7 +2,7 @@
  * @Author: HePeng
  * @Date: 2020-04-27 09:39:43
  * @Last Modified by: hepeng
- * @Last Modified time: 2020-06-26 09:42:02
+ * @Last Modified time: 2020-07-10 21:03:14
  */
 const webpack = require('webpack')
 const path = require('path')
@@ -37,12 +37,15 @@ module.exports = {
         }
       }
     },
-    host: 'localhost',
+    host: '0.0.0.0',
     port: '8080'
   },
   // 修复ie10 app.js报错问题
   transpileDependencies: ['normalize-url', 'mini-css-extract-plugin', 'prepend-http', 'sort-keys'], // 当您的依赖 需要通过babel显式转译时 放到这里
   chainWebpack: config => {
+    // 移除 prefetch preload 插件 提高打包速度
+    // config.plugins.delete('prefetch-index')
+    // config.plugins.delete('preload-index')
     const types = ['vue-modules', 'vue', 'normal-modules', 'normal']
     types.forEach(type => addStyleResource(config.module.rule('less').oneOf(type)))
     config.resolve.alias // 自定义目录别名
@@ -84,7 +87,7 @@ module.exports = {
         // jQuery: 'jquery'
       }),
       new ZipPlugin({
-        path: path.join(__dirname, './dist'),
+        path: path.join(__dirname, './'),
         filename: 'dist.zip'
       }),
       new webpack.DllReferencePlugin({
@@ -114,7 +117,7 @@ module.exports = {
           sourceMap: false,
           parallel: true // 使用多进程并行运行来提高构建速度。默认并发运行数：os.cpus().length - 1。
         })
-      );
+      )
     }
   }
 }
