@@ -33,6 +33,11 @@ export default new Router({
         name: 'example',
         component: () =>
             import(/* webpackChunkName: 'about' */ '../example.vue') // 仅作为 功能演示及方法查询 后期将会删除
+      }, {
+        path: '/index/smzq',
+        name: 'smzq',
+        component: () =>
+            import('../view/smzq.vue')
       }]
     }
   ]

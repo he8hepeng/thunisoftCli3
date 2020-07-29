@@ -12,6 +12,12 @@
           <span slot="title">演示页面</span>
         </template>
       </el-menu-item>
+      <el-menu-item index="smzq">
+        <template slot="title">
+          <i class="el-icon-zbpz"></i>
+          <span slot="title">声明周期</span>
+        </template>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>
