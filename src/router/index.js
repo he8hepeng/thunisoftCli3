@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import templateRouter from '../components/template/index.js'
 
 const originalPush = Router.prototype.push
 Router.prototype.push = function push (location) {
@@ -38,6 +39,12 @@ export default new Router({
         name: 'smzq',
         component: () =>
             import('../view/smzq.vue')
+      }, {
+        path: '/index/instruct',
+        name: 'instruct',
+        component: () =>
+            import('../view/instruct.vue'),
+        children: templateRouter
       }]
     }
   ]

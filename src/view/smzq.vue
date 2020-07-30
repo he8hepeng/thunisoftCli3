@@ -8,6 +8,13 @@ export default {
       message: '声明周期'
     }
   },
+  beforeRouteEnter (to, from, next) {
+    console.group('------路由进入前------')
+    console.log(to, from)
+    next(vm => {
+      console.log(vm)
+    })
+  },
   beforeCreate: function () {
     console.group('------beforeCreate创建前状态------')
     console.log('%c%s', 'color:red', 'el     : ' + this.$el) // undefined
@@ -47,6 +54,11 @@ export default {
     console.log(this.$el)
     console.log('%c%s', 'color:red', 'data   : ' + this.$data)
     console.log('%c%s', 'color:red', 'message: ' + this.message)
+  },
+  beforeRouteLeave (to, from, next) {
+    console.group('------路由离开前------')
+    console.log(to, from)
+    next()
   },
   beforeDestroy: function () {
     console.group('beforeDestroy 销毁前状态===============》')

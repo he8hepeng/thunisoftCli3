@@ -18,6 +18,17 @@
           <span slot="title">声明周期</span>
         </template>
       </el-menu-item>
+      <el-submenu index="instruct">
+        <template slot="title">
+          <i class="el-icon-zbpz"></i>
+          <span slot="title">指令</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="template">模板语法</el-menu-item>
+          <el-menu-item index="for">for</el-menu-item>
+          <el-menu-item index="if">if</el-menu-item>
+        </el-menu-item-group>
+      </el-submenu>
     </el-menu>
   </div>
 </template>
