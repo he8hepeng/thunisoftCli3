@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import templateRouter from '../components/template/index.js'
 
 const originalPush = Router.prototype.push
 Router.prototype.push = function push (location) {
@@ -44,7 +43,27 @@ export default new Router({
         name: 'instruct',
         component: () =>
             import('../view/instruct.vue'),
-        children: templateRouter
+        children: [{
+          path: '/index/template',
+          name: 'template',
+          component: () => import('../components/template/template.vue')
+        }, {
+          path: '/index/if',
+          name: 'if',
+          component: () => import('../components/template/if.vue')
+        }, {
+          path: '/index/for',
+          name: 'for',
+          component: () => import('../components/template/for.vue')
+        }, {
+          path: '/index/class',
+          name: 'class',
+          component: () => import('../components/template/class.vue')
+        }, {
+          path: '/index/filter',
+          name: 'filter',
+          component: () => import('../components/template/filter.vue')
+        }]
       }]
     }
   ]

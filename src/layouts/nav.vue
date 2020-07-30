@@ -27,6 +27,8 @@
           <el-menu-item index="template">模板语法</el-menu-item>
           <el-menu-item index="for">for</el-menu-item>
           <el-menu-item index="if">if</el-menu-item>
+          <el-menu-item index="class">class</el-menu-item>
+          <el-menu-item index="filter">filter</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
     </el-menu>

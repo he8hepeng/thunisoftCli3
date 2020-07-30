@@ -4,16 +4,22 @@
     <div>我叫: {{name}}, 我今年：{{age}}岁，我的性别：{{gender}}</div>
     <div>{{namePlant}}</div>
     <div>{{textPlant(name, age, gender)}}</div>
+    <el-input v-model="text"></el-input>
+    <span>{{text}}</span>
+    <br />
+    <el-button v-on:click="text = '123'" v-bind:id="text">重置数据</el-button>
   </div>
 </template>
 
 <script>
 export default {
+  name: '模板',
   data () {
     return {
       name: '盒子',
       age: '18',
-      gender: '男'
+      gender: '男',
+      text: '123'
     }
   },
   computed: {
