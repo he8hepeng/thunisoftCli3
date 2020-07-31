@@ -5,10 +5,10 @@
       <span v-for="(value, key, index) in list" :key="index">{{key}} + {{value}}</span>
     </div>
     <div>
-      <span v-for="(item, idx) in arrayList" ::key="idx">{{item}}</span>
+      <span v-for="(item, idx) in arrayList" :key="idx">{{item}}</span>
     </div>
     <div>
-      <span v-for="(value, idx) in 10" ::key="idx">{{value}}<br /></span>
+      <span v-for="(value, idx) in 10" :key="idx">{{value}}<br /></span>
     </div>
   </div>
 </template>
@@ -22,7 +22,7 @@ export default {
         age: '18',
         gender: '男'
       },
-      arrayList: [1,3,5,7,9]
+      arrayList: [1, 3, 5, 7, 9]
     }
   }
 }

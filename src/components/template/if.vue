@@ -7,12 +7,12 @@
   </div>
 </template>
 <script>
-  export default {
-    name: 'if判断',
-    data () {
-      return {
-        clickType: true
-      }
+export default {
+  name: 'if判断',
+  data () {
+    return {
+      clickType: true
     }
   }
+}
 </script>

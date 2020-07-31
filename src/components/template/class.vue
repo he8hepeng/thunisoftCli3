@@ -11,18 +11,18 @@
   </div>
 </template>
 <script>
-  export default {
-    name: 'class绑定',
-    data () {
-      return {
-        isActive: true,
-        classObj: {
-          active: true,
-          textDrag: true
-        }
+export default {
+  name: 'class绑定',
+  data () {
+    return {
+      isActive: true,
+      classObj: {
+        active: true,
+        textDrag: true
       }
     }
   }
+}
 </script>
 <style scoped lang="less">
   .def {
