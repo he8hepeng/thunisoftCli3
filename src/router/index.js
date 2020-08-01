@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import { routerList } from '../components/template/index'
 
 const originalPush = Router.prototype.push
 Router.prototype.push = function push (location) {
@@ -43,48 +44,7 @@ export default new Router({
           path: '/index/instruct',
           name: 'instruct',
           component: () => import('../view/instruct.vue'),
-          children: [
-            {
-              path: '/index/instruct/template',
-              name: 'template',
-              component: () => import('../components/template/template.vue')
-            },
-            {
-              path: '/index/instruct/if',
-              name: 'if',
-              component: () => import('../components/template/if.vue')
-            },
-            {
-              path: '/index/instruct/for',
-              name: 'for',
-              component: () => import('../components/template/for.vue')
-            },
-            {
-              path: '/index/instruct/class',
-              name: 'class',
-              component: () => import('../components/template/class.vue')
-            },
-            {
-              path: '/index/instruct/filter',
-              name: 'filter',
-              component: () => import('../components/template/filter.vue')
-            },
-            {
-              path: '/index/instruct/computed',
-              name: 'computed',
-              component: () => import('../components/template/computed.vue')
-            },
-            {
-              path: '/index/instruct/watch',
-              name: 'watch',
-              component: () => import('../components/template/watch.vue')
-            },
-            {
-              path: '/index/instruct/mixin',
-              name: 'mixin',
-              component: () => import('../components/template/mixin.vue')
-            }
-          ]
+          children: routerList
         },
         {
           path: '/index/router/:id',

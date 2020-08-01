@@ -11,6 +11,9 @@ export default {
   mixins: [mixin],
   data () {
     return {
+      list: {
+        age: 17
+      }
     }
   }
 }

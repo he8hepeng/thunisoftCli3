@@ -1,6 +1,7 @@
 <template>
   <div>
     <api-head>computed 计算属性</api-head>
+    <div>{{firstNum - lastNum}}</div>
     <div>{{js}}</div>
     <div>{{js}}</div>
     <div>{{js}}</div>

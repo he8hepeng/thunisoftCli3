@@ -3,7 +3,11 @@
     <api-head>IF判断</api-head>
     <el-button @click="clickType = !clickType">{{clickType ? '隐藏' : '展示'}}</el-button>
     <p v-if="clickType">来控制我呀</p>
+    <p v-else>我来了</p>
     <p v-show="clickType">也来控制我呀</p>
+    <div v-if="text === 1">1</div>
+    <div v-else-if="text === 2">2</div>
+    <div v-else>3</div>
   </div>
 </template>
 <script>
@@ -11,7 +15,8 @@ export default {
   name: 'if判断',
   data () {
     return {
-      clickType: true
+      clickType: true,
+      text: 65
     }
   }
 }

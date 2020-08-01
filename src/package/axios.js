@@ -58,7 +58,7 @@ function apiAxios (method, url, data, params, success, failure) {
       //     message: "成功"
       //   };
       // }
-      success(res.data.data.content)
+      success(res.data.data)
     })
     .catch(function (err) {
       if (failure) {

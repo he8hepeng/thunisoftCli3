@@ -24,14 +24,7 @@
           <span slot="title">指令</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="template">模板语法</el-menu-item>
-          <el-menu-item index="for">for</el-menu-item>
-          <el-menu-item index="if">if</el-menu-item>
-          <el-menu-item index="class">class</el-menu-item>
-          <el-menu-item index="filter">filter</el-menu-item>
-          <el-menu-item index="computed">computed</el-menu-item>
-          <el-menu-item index="watch">watch</el-menu-item>
-          <el-menu-item index="mixin">mixin</el-menu-item>
+          <el-menu-item v-for="(item, idx) in navList" :key="idx" :index="item.pathIdx">{{item.pathName}}</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
     </el-menu>
@@ -39,10 +32,12 @@
 </template>
 <script>
 import { mapState } from 'vuex'
+import { navList } from '../components/template/index.js'
 export default {
   data () {
     return {
-      isCollapse: false
+      isCollapse: false,
+      navList: navList
     }
   },
   computed: {

@@ -7,7 +7,7 @@
     <el-input v-model="text"></el-input>
     <span>{{text}}</span>
     <br />
-    <el-button v-on:click="text = '123'" v-bind:id="text">重置数据</el-button>
+    <el-button @click="text = '123'" :id="text">重置数据</el-button>
   </div>
 </template>
 
@@ -22,6 +22,9 @@ export default {
       text: '123'
     }
   },
+  created () {
+    this.a = 123
+  },
   computed: {
     namePlant () {
       return `我叫: ${this.name}, 我今年：${this.age}岁，我的性别：${this.gender}`
@@ -34,7 +37,7 @@ export default {
   }
 }
 </script>
-<style lang="less" scoped>
+<style lang="less">
   div {
     color: #999;
   }
