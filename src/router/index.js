@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import { routerList } from '../components/cssTrain/index.js'
 
 const originalPush = Router.prototype.push
 Router.prototype.push = function push (location) {
@@ -33,6 +34,11 @@ export default new Router({
         name: 'example',
         component: () =>
             import(/* webpackChunkName: 'about' */ '../example.vue') // 仅作为 功能演示及方法查询 后期将会删除
+      }, {
+        path: '/index/cssTrain',
+        name: 'css实例',
+        component: () => import('../view/csstrain.vue'),
+        children: routerList
       }]
     }
   ]

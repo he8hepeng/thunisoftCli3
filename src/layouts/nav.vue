@@ -12,15 +12,26 @@
           <span slot="title">演示页面</span>
         </template>
       </el-menu-item>
+      <el-submenu index="2">
+        <template slot="title">
+          <i class="el-icon-location"></i>
+          <span>css</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item v-for="(item, idx) in navList" :key="idx" :index="item.name">{{item.name}}</el-menu-item>
+        </el-menu-item-group>
+      </el-submenu>
     </el-menu>
   </div>
 </template>
 <script>
 import { mapState } from 'vuex'
+import { navList } from '../components/cssTrain/index.js'
 export default {
   data () {
     return {
-      isCollapse: false
+      isCollapse: false,
+      navList
     }
   },
   computed: {
