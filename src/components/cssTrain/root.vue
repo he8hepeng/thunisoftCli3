@@ -6,13 +6,13 @@ export default {
   name: 'root选择器'
 }
 </script>
-<style>
+<style scoped>
   :root {
     background: yellow;
-    --red-background: red
+    --red-background: red;
   }
   .fd-root {
-    background: var(--red-background);
+    /* background: var(--red-background); */
     width: 100%;
     height: 100%;
   }

@@ -30,6 +30,9 @@ export default {
       /* &:not(.fd-name) {
         border-bottom: 1px solid blue;
       } */
+      &:not(:nth-child(2)) {
+        background: blue;
+      }
     }
   }
 </style>

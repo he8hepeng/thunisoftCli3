@@ -20,21 +20,21 @@ export default {
 <style lang="less" scoped>
   .fd-of-type {
     .size(100%);
-    /* p:nth-of-type(3) {
+    p:nth-of-type(3) {
       background: yellow;
-    } */
-    /* p:nth-of-type(6) {
+    }
+    p:nth-of-type(6) {
       background: greenyellow;
-    } */
+    }
     /* p:first-of-type {
       background: red;
     } */
     /* p:last-of-type {
       background: blueviolet;
     } */
-    /* p:nth-last-of-type(3) {
+    p:nth-last-of-type(3) {
       background: black;
       color: #fff;
-    } */
+    }
   }
 </style>

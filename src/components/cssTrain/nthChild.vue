@@ -16,14 +16,14 @@ export default {
     /* div:nth-child(2){
       background: greenyellow;
     } */
-    /* div:nth-child(n+4) {
+    /* div:nth-child(3n) {
       background: yellow;
     } */
     /* div:nth-child(-n+3) {
       background: yellow;
     } */
-    /* div:nth-child(3n-2) {
+    div:nth-child(3n-2) {
       background: yellow;
-    } */
+    }
   }
 </style>

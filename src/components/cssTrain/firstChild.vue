@@ -21,18 +21,18 @@ export default {
 </script>
 <style lang="less" scoped>
   .fd-firstChild {
-    p:first-child {
+    /* p:first-child {
       background: yellow;
     }
     p:last-child {
       background: red;
-    }
-    /* P:first-of-type {
-      background: greenyellow;;
+    } */
+    p:first-of-type {
+      background: yellow;
     }
     P:last-of-type {
       background: #333;
       color: #fff;
-    } */
+    }
   }
 </style>

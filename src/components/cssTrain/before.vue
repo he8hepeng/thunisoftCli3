@@ -23,6 +23,9 @@ export default {
       &::before {
         content: '⭐';
       }
+      &::after {
+        content: '⭐';
+      }
     }
   }
 </style>
