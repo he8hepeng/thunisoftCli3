@@ -2,7 +2,7 @@
  * @Author: HePeng
  * @Date: 2020-04-27 09:39:43
  * @Last Modified by: HePeng
- * @Last Modified time: 2020-09-21 11:06:52
+ * @Last Modified time: 2020-09-21 14:47:57
  */
 const webpack = require('webpack')
 const path = require('path')
@@ -66,6 +66,7 @@ module.exports = {
       .set("@assets", resolvePath("src/assets"))
       .set("@common", resolvePath("src/components/common")); // 公共模块
     config.resolve.symlinks(true);
+ 
   },
   css: {
     loaderOptions: {

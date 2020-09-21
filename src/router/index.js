@@ -14,14 +14,7 @@ export default new Router({
     // 首页重定向
     {
       path: '/',
-      name: '',
-      redirect: '/index'
+      name: ''
     },
-    // 错误重定向
-    {
-      path: '*',
-      name: '',
-      redirect: '/index'
-    }
   ]
 })

@@ -2,7 +2,7 @@
  * @Author: HePeng
  * @Date: 2020-04-27 09:39:53
  * @Last Modified by: HePeng
- * @Last Modified time: 2020-09-21 11:08:26
+ * @Last Modified time: 2020-09-21 11:20:51
  */
 import 'babel-polyfill'
 import Vue from 'vue'
@@ -13,9 +13,9 @@ import axios from './package/axios.js'
 // 引入全局mixin 方法
 import globalMixin from './assets/js/mixin/globalMinxin.js'
 import fileSaver from 'file-saver'
-// 引入element
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+// 引入 ant-design-vue
+import Antd from 'ant-design-vue'
+import 'ant-design-vue/dist/antd.css'
 // 引入全局 less
 import './assets/css/index.js'
 // 引入lodash
@@ -28,8 +28,8 @@ import util from './package/util/util.js'
 import './components/common/index.js'
 
 Vue.use(globalMixin)
+Vue.use(Antd)
 Vue.prototype._ = _
-Vue.use(ElementUI)
 Vue.config.productionTip = false
 Vue.prototype.axios = axios
 Vue.prototype.util = util

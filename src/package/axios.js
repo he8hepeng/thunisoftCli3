@@ -1,8 +1,5 @@
 // 引用axios
-import {
-  Message,
-  Loading
-} from 'element-ui' // 引入elm组件
+import { message } from "ant-design-vue"; // 引入elm组件
 import store from '../store/index' // 通过vuex 来存储 token等信息
 import axios from 'axios'
 let loadingInstance // 请求遮罩
@@ -133,11 +130,8 @@ export default {
 axios.interceptors.request.use(config => {
   // 为了解决 promise.all的 多个参数 无法计算遮罩 增加遮罩计数器
   if (modelIndex === 0) {
-    loadingInstance = Loading.service({
-      lock: true,
-      text: '努力拉取中',
-      background: 'rgba(0, 0, 0, 0.7)'
-    })
+    console.log(store);
+    store.antD.dispatch('Set_Spin', true)
   }
   modelIndex++
   config.headers.common['token'] = store.getters.getCookie() // 每次发送之前 从vuex拿token携带
@@ -174,10 +168,10 @@ axios.interceptors.response.use(
         let reader = new FileReader()
         reader.readAsText(error.response.data, 'utf-8')
         reader.onload = e => {
-          Message.error(JSON.parse(reader.result))
+          message.error(JSON.parse(reader.result));
         }
       } else {
-        Message.error(error.response.data.message)
+        message.error(error.response.data.message);
       }
     }
     return Promise.reject(error)
@@ -187,13 +181,11 @@ axios.interceptors.response.use(
 function closeLoding () {
   modelIndex--
   if (modelIndex === 0) {
-    if (loadingInstance) {
-      if (repeatToken) {
-        repeatToken = false
-        // validateToken()
-      }
-      loadingInstance.close()
+    if (repeatToken) {
+      repeatToken = false;
+      // validateToken()
     }
+    store.antD.dispatch("Set_Spin", false);
   }
 }
 

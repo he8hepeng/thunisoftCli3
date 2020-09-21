@@ -2,7 +2,7 @@
  * @Author: HePeng
  * @Date: 2020-04-27 09:39:34
  * @Last Modified by: HePeng
- * @Last Modified time: 2020-04-27 10:05:32
+ * @Last Modified time: 2020-09-21 14:25:45
  */
 const path = require('path')
 const webpack = require('webpack')
@@ -19,7 +19,7 @@ module.exports = {
       'vue-router',
       'vuex',
       'axios',
-      'element-ui',
+      'ant-design-vue',
       'moment',
       'lodash',
       'file-saver',
@@ -39,7 +39,7 @@ module.exports = {
     // 设置环境变量
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: 'production'
+        NODE_ENV: JSON.stringify('production')
       }
     }),
     // manifest.json 描述动态链接库包含了哪些内容
