@@ -1,8 +1,8 @@
 /*
  * @Author: HePeng
  * @Date: 2020-04-27 09:39:53
- * @Last Modified by: hepeng
- * @Last Modified time: 2020-07-10 21:00:57
+ * @Last Modified by: HePeng
+ * @Last Modified time: 2020-09-21 11:08:26
  */
 import 'babel-polyfill'
 import Vue from 'vue'
@@ -22,10 +22,6 @@ import './assets/css/index.js'
 import _ from 'lodash'
 // 引入自定义
 import '@/assets/js/directive/index.js'
-// 引入Mock数据
-import './package/mock/mock'
-// 在公共文件 维护所有接口
-import _url from './package/config/url.js'
 // 引入公共的util工具
 import util from './package/util/util.js'
 // 全局组件
@@ -36,7 +32,6 @@ Vue.prototype._ = _
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 Vue.prototype.axios = axios
-Vue.prototype.url = _url
 Vue.prototype.util = util
 Vue.prototype.$fileSaver = fileSaver
 
