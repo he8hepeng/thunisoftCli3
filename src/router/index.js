@@ -15,13 +15,12 @@ export default new Router({
     {
       path: '/',
       name: '',
-      redirect: '/index'
     },
     // 错误重定向
     {
       path: '*',
       name: '',
-      redirect: '/index'
+      redirect: '/'
     }
   ]
 })
