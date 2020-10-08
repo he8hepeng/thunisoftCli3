@@ -1,8 +1,7 @@
 // 引用axios
-import { message } from "ant-design-vue"; // 引入elm组件
+import { message } from 'ant-design-vue' // 引入elm组件
 import store from '../store/index' // 通过vuex 来存储 token等信息
 import axios from 'axios'
-let loadingInstance // 请求遮罩
 let modelIndex = 0 // 并发 蒙层计数
 let repeatToken = false // 是否tap
 // 自定义判断元素类型JS
@@ -130,7 +129,7 @@ export default {
 axios.interceptors.request.use(config => {
   // 为了解决 promise.all的 多个参数 无法计算遮罩 增加遮罩计数器
   if (modelIndex === 0) {
-    console.log(store);
+    console.log(store)
     store.antD.dispatch('Set_Spin', true)
   }
   modelIndex++
@@ -168,10 +167,10 @@ axios.interceptors.response.use(
         let reader = new FileReader()
         reader.readAsText(error.response.data, 'utf-8')
         reader.onload = e => {
-          message.error(JSON.parse(reader.result));
+          message.error(JSON.parse(reader.result))
         }
       } else {
-        message.error(error.response.data.message);
+        message.error(error.response.data.message)
       }
     }
     return Promise.reject(error)
@@ -182,10 +181,10 @@ function closeLoding () {
   modelIndex--
   if (modelIndex === 0) {
     if (repeatToken) {
-      repeatToken = false;
+      repeatToken = false
       // validateToken()
     }
-    store.antD.dispatch("Set_Spin", false);
+    store.antD.dispatch('Set_Spin', false)
   }
 }
 

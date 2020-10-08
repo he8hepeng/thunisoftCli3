@@ -1,8 +1,8 @@
 /*
  * @Author: HePeng
  * @Date: 2020-04-27 09:39:53
- * @Last Modified by: HePeng
- * @Last Modified time: 2020-09-21 11:20:51
+ * @Last Modified by: hepeng
+ * @Last Modified time: 2020-10-08 15:24:09
  */
 import 'babel-polyfill'
 import Vue from 'vue'
@@ -15,7 +15,6 @@ import globalMixin from './assets/js/mixin/globalMinxin.js'
 import fileSaver from 'file-saver'
 // 引入 ant-design-vue
 import Antd from 'ant-design-vue'
-import 'ant-design-vue/dist/antd.css'
 // 引入全局 less
 import './assets/css/index.js'
 // 引入lodash
@@ -30,10 +29,21 @@ import './components/common/index.js'
 Vue.use(globalMixin)
 Vue.use(Antd)
 Vue.prototype._ = _
-Vue.config.productionTip = false
 Vue.prototype.axios = axios
 Vue.prototype.util = util
 Vue.prototype.$fileSaver = fileSaver
+
+Vue.config.productionTip = false
+// 取消日志警告
+Vue.config.silent = false
+
+Vue.config.errorHandler = function (err, vm, info) {
+  // handle error
+  // `info` 是 Vue 特定的错误信息，比如错误所在的生命周期钩子
+  // 只在 2.2.0+ 可用
+  console.log(err, vm, info)
+  throw new Error('有错误，赶紧改！！')
+}
 
 new Vue({
   router,

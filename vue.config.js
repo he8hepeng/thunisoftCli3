@@ -1,8 +1,8 @@
 /*
  * @Author: HePeng
  * @Date: 2020-04-27 09:39:43
- * @Last Modified by: HePeng
- * @Last Modified time: 2020-09-21 14:47:57
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2020-10-08 15:17:50
  */
 const webpack = require('webpack')
 const path = require('path')
@@ -18,7 +18,7 @@ module.exports = {
   publicPath: "./",
   outputDir: process.env.VUE_APP_DIR, // 输出文件目录
   assetsDir: process.env.VUE_APP_URL, // 放置生成的静态资源 (js、css、img、fonts) 的 (相对于 outputDir 的) 目录。
-  indexPath: "index.html", // 修改打包的默认html文件路径
+  indexPath: process.env.VUE_APP_HTML, // 修改打包的默认html文件路径
   filenameHashing: true, // 文件名哈希值 (当你不能使用默认html时 改为false)
   productionSourceMap: true, // false时 会加快您的打包速度 减小代码体积 但无法在控制台定位错误（慎用）
   // 当您测试使用下载时 请删除Mock依赖 (main.js vue.config.js) 他会影响您的下载功能
@@ -66,7 +66,7 @@ module.exports = {
       .set("@assets", resolvePath("src/assets"))
       .set("@common", resolvePath("src/components/common")); // 公共模块
     config.resolve.symlinks(true);
- 
+
   },
   css: {
     loaderOptions: {
