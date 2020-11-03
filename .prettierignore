@@ -1,0 +1,7 @@
+package.json
+README.md
+!.eslintrc.js
+!webpack.*
+!vue.config.*
+# this file doesn't exist, but we use it as a filename that should be ignored
+# by prettier in the tests

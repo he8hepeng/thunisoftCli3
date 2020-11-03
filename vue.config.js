@@ -15,7 +15,7 @@ const ZipPlugin = require('zip-webpack-plugin') // 当需要手动打包 会自�
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin') // dll优化
 module.exports = {
   lintOnSave: true, // 是否lint检查 (建议开启)
-  publicPath: "./",
+  publicPath: './',
   outputDir: process.env.VUE_APP_DIR, // 输出文件目录
   assetsDir: process.env.VUE_APP_URL, // 放置生成的静态资源 (js、css、img、fonts) 的 (相对于 outputDir 的) 目录。
   indexPath: process.env.VUE_APP_HTML, // 修改打包的默认html文件路径
@@ -25,27 +25,27 @@ module.exports = {
   devServer: {
     proxy: {
       // proxy all requests starting with /api to jsonplaceholder
-      "/api": {
-        target: "http://localhost:8080", // 代理接口
+      '/api': {
+        target: 'http://localhost:8080', // 代理接口
         changeOrigin: true,
         pathRewrite: {
-          "^/api": "/" // 代理的路径
+          '^/api': '/' // 代理的路径
         },
         onProxyReq: function(proxyReq, req, res) {
           // 实在不知道代理后的路径，可以在这里打印出出来看看2
-          console.log("原路径：" + req.originalUrl, "代理路径：" + req.path);
+          console.log('原路径：' + req.originalUrl, '代理路径：' + req.path)
         }
       }
     },
-    host: "0.0.0.0",
-    port: "8080"
+    host: '0.0.0.0',
+    port: '8080'
   },
   // 修复ie10 app.js报错问题
   transpileDependencies: [
-    "normalize-url",
-    "mini-css-extract-plugin",
-    "prepend-http",
-    "sort-keys"
+    'normalize-url',
+    'mini-css-extract-plugin',
+    'prepend-http',
+    'sort-keys'
   ], // 当您的依赖 需要通过babel显式转译时 放到这里
   chainWebpack: config => {
     // 移除 prefetch preload 插件 提高打包速度
@@ -56,17 +56,16 @@ module.exports = {
     // 分割代码
     config.optimization.splitChunks({
       chunks: 'all'
-    });
-    const types = ["vue-modules", "vue", "normal-modules", "normal"];
+    })
+    const types = ['vue-modules', 'vue', 'normal-modules', 'normal']
     types.forEach(type =>
-      addStyleResource(config.module.rule("less").oneOf(type))
-    );
+      addStyleResource(config.module.rule('less').oneOf(type))
+    )
     config.resolve.alias // 自定义目录别名
-      .set("@", resolvePath("src"))
-      .set("@assets", resolvePath("src/assets"))
-      .set("@common", resolvePath("src/components/common")); // 公共模块
-    config.resolve.symlinks(true);
-
+      .set('@', resolvePath('src'))
+      .set('@assets', resolvePath('src/assets'))
+      .set('@common', resolvePath('src/components/common')) // 公共模块
+    config.resolve.symlinks(true)
   },
   css: {
     loaderOptions: {
@@ -87,23 +86,23 @@ module.exports = {
         // jQuery: 'jquery'
       }),
       new ZipPlugin({
-        path: path.join(__dirname, "./"),
-        filename: "dist.zip"
+        path: path.join(__dirname, './'),
+        filename: 'dist.zip'
       }),
       new webpack.DllReferencePlugin({
         context: process.cwd(),
-        manifest: require("./public/vendor/vendor-manifest.json")
+        manifest: require('./public/vendor/vendor-manifest.json')
       }),
       // 将 dll 注入到 生成的 html 模板中
       new AddAssetHtmlPlugin({
         // dll文件位置
-        filepath: path.resolve(__dirname, "./public/vendor/*.js"),
+        filepath: path.resolve(__dirname, './public/vendor/*.js'),
         // dll 引用路径
-        publicPath: "./vendor",
+        publicPath: './vendor',
         // dll最终输出的目录
-        outputPath: "./vendor"
+        outputPath: './vendor'
       })
-    );
+    )
     if (IS_PROD) {
       config.plugins.push(
         new UglifyJsPlugin({
@@ -117,12 +116,12 @@ module.exports = {
           sourceMap: false,
           parallel: true // 使用多进程并行运行来提高构建速度。默认并发运行数：os.cpus().length - 1。
         })
-      );
+      )
     }
   }
-};
+}
 
-function addStyleResource (rule) {
+function addStyleResource(rule) {
   rule.use('style-resource')
     .loader('style-resources-loader')
     .options({
@@ -132,6 +131,6 @@ function addStyleResource (rule) {
     })
 }
 
-function resolvePath (dir) {
+function resolvePath(dir) {
   return path.join(__dirname, dir)
 }

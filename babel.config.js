@@ -3,5 +3,8 @@ module.exports = {
     ['@vue/app', {
       useBuiltIns: 'entry'
     }]
+  ],
+  plugins: [
+    ['@babel/plugin-proposal-optional-chaining']
   ]
 }

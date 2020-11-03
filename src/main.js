@@ -2,7 +2,7 @@
  * @Author: HePeng
  * @Date: 2020-04-27 09:39:53
  * @Last Modified by: hepeng
- * @Last Modified time: 2020-10-08 15:24:09
+ * @Last Modified time: 2020-11-03 14:33:24
  */
 import 'babel-polyfill'
 import Vue from 'vue'
@@ -37,7 +37,7 @@ Vue.config.productionTip = false
 // 取消日志警告
 Vue.config.silent = false
 
-Vue.config.errorHandler = function (err, vm, info) {
+Vue.config.errorHandler = function(err, vm, info) {
   // handle error
   // `info` 是 Vue 特定的错误信息，比如错误所在的生命周期钩子
   // 只在 2.2.0+ 可用

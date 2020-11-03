@@ -8,19 +8,19 @@
 import VueCookies from 'vue-cookies'
 
 export default {
-  getCookie (key) {
+  getCookie(key) {
     return VueCookies.get(key)
   },
-  setCookie (key, value) {
+  setCookie(key, value) {
     VueCookies.set(key, value)
   },
-  deleteCookie (key) {
+  deleteCookie(key) {
     VueCookies.remove(key)
   },
-  isCookie (key) {
+  isCookie(key) {
     VueCookies.isKey(key)
   },
-  hasKeys () {
+  hasKeys() {
     return VueCookies.keys()
   }
 }

@@ -1,16 +1,24 @@
+/*
+ * @Author: hepeng
+ * @Date: 2019-09-11 15:42:46
+ * @Last Modified by: hepeng
+ * @Last Modified time: 2020-11-03 15:13:40
+ */
 // 引用axios
-import { message } from 'ant-design-vue' // 引入elm组件
+import {
+  message
+} from 'ant-design-vue' // 引入elm组件
 import store from '../store/index' // 通过vuex 来存储 token等信息
 import axios from 'axios'
 let modelIndex = 0 // 并发 蒙层计数
 let repeatToken = false // 是否tap
 // 自定义判断元素类型JS
-function toType (obj) {
+function toType(obj) {
   return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
 }
 // 参数过滤函数
-function filterNull (o) {
-  for (var key in o) {
+function filterNull(o) {
+  for (const key in o) {
     if (o[key] === null) {
       delete o[key]
     }
@@ -33,28 +41,26 @@ function filterNull (o) {
  * @param {any} success 正确回调
  * @param {any} failure 错误回调
  */
-function apiAxios (method, url, data, params, success, failure) {
+function apiAxios(method, url, data, params, success, failure) {
+  // const prefixUrl = '/ppa2/api/v1/'
   if (params && typeof params !== 'string') {
     params = filterNull(params)
   }
   axios({
-    method: method === 'postG' ? 'POST' : method,
-    url: url,
-    data: data || null,
-    params: params || null,
-    withCredentials: false,
-    headers: {
-      'X-HTTP-Method-Override': method === 'postG' ? 'get' : '',
-      'Content-Type': 'application/json'
-    }
-  })
+      method: method === 'postG' ? 'POST' : method,
+      baseURL: '',
+      url: url,
+      data: data || null,
+      params: params || null,
+      withCredentials: false,
+      headers: {
+        'X-HTTP-Method-Override': method === 'postG' ? 'get' : '',
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    })
     .then(function (res) {
-      // if (res.status === 204) {
-      //   res.data = {
-      //     message: "成功"
-      //   };
-      // }
-      success(res.data.data.content)
+      success(res.data.content)
     })
     .catch(function (err) {
       if (failure) {
@@ -73,12 +79,13 @@ function apiAxios (method, url, data, params, success, failure) {
  * @param {any} success 正确回调
  * @param {any} failure 错误回调
  */
-function apiAxiosDownload (method, url, data, params, success, failure) {
+function apiAxiosDownload(method, url, data, params, success, failure) {
   if (params && typeof params !== 'string') {
     params = filterNull(params)
   }
   axios({
     method: 'POST',
+    baseURL: '',
     url: url,
     // baseURL: global.configUrl1,
     data: data || null,
@@ -86,7 +93,6 @@ function apiAxiosDownload (method, url, data, params, success, failure) {
     responseType: 'blob',
     withCredentials: false
   }).then(function (res) {
-    console.log(res)
     success(res.data)
   }).catch(function (err) {
     if (failure) {
@@ -117,8 +123,8 @@ export default {
     return apiAxios('DELETE', url, data, params, success, failure)
   },
   // 增加 postG请求 按后台要求 get请求在某些情况 需要传实体body so 添加postG请求
-  postG: function (url, data, params, postdata, success, failure) {
-    return apiAxios('postG', url, data, params, success, failure)
+  postG: function (url, data, postData, success, failure) {
+    return apiAxios('postG', url, data, postData, success, failure)
   },
   // 下载的请求接口
   postDownload: function (url, data, params, success, failure) {
@@ -129,12 +135,11 @@ export default {
 axios.interceptors.request.use(config => {
   // 为了解决 promise.all的 多个参数 无法计算遮罩 增加遮罩计数器
   if (modelIndex === 0) {
-    console.log(store)
-    store.antD.dispatch('Set_Spin', true)
+    store.dispatch('Set_Spin', true)
   }
   modelIndex++
   config.headers.common['token'] = store.getters.getCookie() // 每次发送之前 从vuex拿token携带
-  // config.headers.common['User-Info'] = store.getters.getUserInfo // 将用户信息等数据 放到header中发给后台
+  config.headers.common['userId'] = store.getters.getUserId() // 将用户信息等数据 放到header中发给后台
   if (config.method === 'get') { // 发现ie下有从缓存拿数据的bug 所以在所有请求加上时间戳
     config.params = {
       _t: Date.parse(new Date()) / 1000,
@@ -159,56 +164,52 @@ axios.interceptors.response.use(
   },
   error => {
     closeLoding()
-    if (error.response !== undefined) {
+    if (error.response.status === 401) {
+      // 401
+      // redirectToLogin()
+    } else if (error.response !== undefined) {
       if (
         error.config.responseType === 'blob' &&
         error.response.data.type === 'application/json'
       ) {
-        let reader = new FileReader()
+        const reader = new FileReader()
         reader.readAsText(error.response.data, 'utf-8')
-        reader.onload = e => {
+        reader.onload = () => {
           message.error(JSON.parse(reader.result))
         }
       } else {
-        message.error(error.response.data.message)
+        message.error({
+          content: error.response.data.message
+        })
       }
     }
     return Promise.reject(error)
   }
 )
 
-function closeLoding () {
+function closeLoding() {
   modelIndex--
   if (modelIndex === 0) {
     if (repeatToken) {
       repeatToken = false
       // validateToken()
     }
-    store.antD.dispatch('Set_Spin', false)
+    store.dispatch('Set_Spin', false)
   }
 }
 
-// 校验token 请维护自己项目的 路径地址
-function validateToken () {
-  apiAxios('GET', 'xxxx', {}, {
-    _timer: new Date().getTime()
-  }, function (res) {
-    store.dispatch('setToken', res)
-    repeatToken = true
-  }, function (err) {
-    redirectToLogin(err.response.data)
-  })
-}
 // 重定向至登录
-function redirectToLogin (url) {
+function redirectToLogin() {
   // Message({ message: '权限已过期，请重新登录！', type: 'error', duration: 1500 })
+  message.error({
+    content: '权限已过期，请重新登录！'
+  })
   store.dispatch('setToken', '')
   // 兼容部分IE11
   if (!window.location.origin) {
     window.location.origin = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '')
   }
-
   setTimeout(() => {
-    window.location.href = url + '/logout?redirect=' + window.location.origin
+    window.location.href = window.location.origin + '/login?redirect=' + window.location.origin
   }, 1300)
 }

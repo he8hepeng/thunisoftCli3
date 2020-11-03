@@ -11,7 +11,7 @@ export default {
     * @param {*} num
     * @returns string
   */
-  _formatNum (num) {
+  _formatNum(num) {
     return JSON.stringify(num).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   },
   /**
@@ -21,7 +21,7 @@ export default {
     * @param {*} _key 属性
     * @returns Boolean
   */
-  _hasKey (_obj, _key) {
+  _hasKey(_obj, _key) {
     return _obj.hasOwnProperty(_key)
   },
   /**
@@ -30,7 +30,7 @@ export default {
     * @param {*} _array 数组
     * @returns Array
   */
-  _removeDuplication (_array) {
+  _removeDuplication(_array) {
     return [...new Set(_array)]
   },
   /**
@@ -40,7 +40,7 @@ export default {
     * @param {string} [_type=true] 默认不传 或true 为升序 不然则为降序
     * @returns Array
   */
-  _sortArray (_array, _type = true) {
+  _sortArray(_array, _type = true) {
     return _array.sort((a, b) => {
       if (_type) {
         return a - b
@@ -56,7 +56,7 @@ export default {
     * @param {*} _item 值
     * @returns Boolean
   */
-  _includes (_array, _item) {
+  _includes(_array, _item) {
     return _array.includes(_item)
   },
   /**
@@ -65,8 +65,8 @@ export default {
     * @param {*} _array 必须数组以及 数字
     * @returns Array
   */
-  _summation (_array) {
-    return _array.reduce(function (prev, cur) {
+  _summation(_array) {
+    return _array.reduce(function(prev, cur) {
       return prev + cur
     }, 0)
   }
