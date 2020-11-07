@@ -1,3 +1,5 @@
-!.eslintrc.js
-!webpack.*
-!vue.config.*
+.eslintrc.js
+webpack.*
+vue.config.*
+.prettierrc
+.prettierignore

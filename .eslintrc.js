@@ -1,4 +1,5 @@
 module.exports = {
+  root: true,
   parserOptions: {
     parser: 'babel-eslint', // 采用 babel-eslint 作为语法解析器
     sourceType: 'module', // 指定来源的类型，有两种script或module
@@ -9,8 +10,16 @@ module.exports = {
     es6: true, // 设置所需检查代码为 es6 语法书写
     node: true
   },
-  extends: ['plugin:vue/recommended', 'eslint:recommended'], // 扩展使用 vue 检查规则和eslint推荐规则
+  extends: [
+    'plugin:vue/essential',
+    'standard',
+    'prettier'
+  ],
+  plugins: ['vue', 'prettier'],
   rules: {
+    'generator-star-spacing': 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'prettier/prettier': 'error',
     'vue/attribute-hyphenation': 0, // 忽略属性连字
     'vue/max-attributes-per-line': [2, {
       singleline: 10,
@@ -38,7 +47,7 @@ module.exports = {
     'camelcase': [2, {
       properties: 'always'
     }], // 为属性强制执行驼峰命名
-    'comma-dangle': [2, 'never'], // 逗号不使用悬挂
+    // 'comma-dangle': [2, 'never'], // 逗号不使用悬挂
     'comma-spacing': [2, {
       before: false,
       after: true
@@ -178,7 +187,7 @@ module.exports = {
       after: true
     }], // 强制分号间隔
     'space-before-blocks': [2, 'always'], // 块必须至少有一个先前的空间
-    'space-before-function-paren': [2, 'never'], // 在(参数后面不允许任何空格
+    // 'space-before-function-paren': [2, 'always'], // 在(参数后面不允许任何空格
     'space-in-parens': [2, 'never'], // 禁止或要求（或）左边的一个或多个空格
     'space-infix-ops': 2, // 强制二元运算符左右各有一个空格
     'space-unary-ops': [2, {

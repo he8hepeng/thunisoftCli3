@@ -16,6 +16,12 @@ npm run dll
 npm run serve
 ```
 
+## eslint使用方法
+```
+1.vscode 拓展 下载 eslint、EditorConfig for VS Code、Prettier - Code formatter
+2.用吧
+```
+
 ## Project setup
 
 ```
