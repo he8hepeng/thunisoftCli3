@@ -2,7 +2,7 @@
  * @Author: hepeng
  * @Date: 2019-09-11 15:42:46
  * @Last Modified by: hepeng
- * @Last Modified time: 2020-11-07 18:57:05
+ * @Last Modified time: 2020-11-09 10:33:21
  */
 // 引用axios
 import { message } from 'ant-design-vue' // 引入elm组件
@@ -57,8 +57,8 @@ function apiAxios(method, url, data, params, success, failure) {
     headers: {
       'X-HTTP-Method-Override': method === 'postG' ? 'get' : '',
       'Content-Type': 'application/json',
-      'X-Requested-With': 'XMLHttpRequest',
-    },
+      'X-Requested-With': 'XMLHttpRequest'
+    }
   })
     .then(function (res) {
       success(res.data.content)
@@ -92,7 +92,7 @@ function apiAxiosDownload(method, url, data, params, success, failure) {
     data: data || null,
     params: params || null,
     responseType: 'blob',
-    withCredentials: false,
+    withCredentials: false
   })
     .then(function (res) {
       success(res.data)
@@ -132,7 +132,7 @@ export default {
   // 下载的请求接口
   postDownload: function (url, data, params, success, failure) {
     return apiAxiosDownload('postG', url, data, params, success, failure)
-  },
+  }
 }
 // 添加一个请求拦截器
 axios.interceptors.request.use(
@@ -148,7 +148,7 @@ axios.interceptors.request.use(
       // 发现ie下有从缓存拿数据的bug 所以在所有请求加上时间戳
       config.params = {
         _t: Date.parse(new Date()) / 1000,
-        ...config.params,
+        ...config.params
       }
     }
     return config
@@ -164,7 +164,7 @@ axios.interceptors.response.use(
     // 与后台沟通 204没有实体类 但前台需要实体类用以 promise回调 so 我们自己搞 按照各业务 可以删除或修改
     if (response.status === 204) {
       response.data = {
-        content: [],
+        content: []
       }
     }
     return response
@@ -186,7 +186,7 @@ axios.interceptors.response.use(
         }
       } else {
         message.error({
-          content: error.response.data.message,
+          content: error.response.data.message
         })
       }
     }
@@ -209,7 +209,7 @@ function closeLodging() {
 function redirectToLogin() {
   // Message({ message: '权限已过期，请重新登录！', type: 'error', duration: 1500 })
   message.error({
-    content: '权限已过期，请重新登录！',
+    content: '权限已过期，请重新登录！'
   })
   store.dispatch('setToken', '')
   // 兼容部分IE11

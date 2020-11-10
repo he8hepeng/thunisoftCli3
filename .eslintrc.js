@@ -47,7 +47,7 @@ module.exports = {
     'camelcase': [2, {
       properties: 'always'
     }], // 为属性强制执行驼峰命名
-    // 'comma-dangle': [2, 'never'], // 逗号不使用悬挂
+    'comma-dangle': [2, 'never'], // 逗号不使用悬挂
     'comma-spacing': [2, {
       before: false,
       after: true

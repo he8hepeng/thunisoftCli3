@@ -3,3 +3,4 @@ webpack.*
 vue.config.*
 .prettierrc
 .prettierignore
+vendor.dll
