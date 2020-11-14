@@ -1,0 +1,22 @@
+{
+  "editor.formatOnSave": true,
+  "[javascript]": {
+    "editor.formatOnSave": false
+  },
+  "eslint.autoFixOnSave": true,
+  "eslint.alwaysShowStatus": true,
+  "prettier.disableLanguages": [
+    "js"
+  ],
+  "files.autoSave": "onFocusChange",
+  "git.enableSmartCommit": true,
+  "editor.fontSize": 14,
+  "editor.formatOnType": false,
+  "prettier.singleQuote": true,
+  "prettier.semi": false,
+  "prettier.eslintIntegration": true,
+  "vetur.format.defaultFormatter.html": "js-beautify-html",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
+}
