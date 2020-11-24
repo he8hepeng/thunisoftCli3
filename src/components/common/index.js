@@ -6,7 +6,7 @@
  */
 import Vue from 'vue'
 const commonComponentsContext = require.context('./', true, /\.vue$/)
-commonComponentsContext.keys().forEach(key => {
+commonComponentsContext.keys().forEach((key) => {
   const ctrl =
     commonComponentsContext(key).default || commonComponentsContext(key)
   Vue.component(`api-${key.replace(/(\.\/|\.vue)/g, '')}`, ctrl)

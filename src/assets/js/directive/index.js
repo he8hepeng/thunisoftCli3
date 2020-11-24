@@ -10,8 +10,9 @@ import Vue from 'vue'
 Vue.directive('FDload', {
   bind(el, binding) {
     const dom = el.querySelector('.el-table__body-wrapper')
-    dom.addEventListener('scroll', function() {
-      const scrollDistance = this.scrollHeight - this.scrollTop - this.clientHeight
+    dom.addEventListener('scroll', function () {
+      const scrollDistance =
+        this.scrollHeight - this.scrollTop - this.clientHeight
       if (scrollDistance <= 0) {
         binding.value()
       }
@@ -22,7 +23,7 @@ Vue.directive('FDload', {
 // 自动选中
 Vue.directive('FDfocus', {
   // 当被绑定的元素插入到 DOM 中时……
-  inserted: function(el) {
+  inserted: function (el) {
     // 聚焦元素
     el.focus()
   }

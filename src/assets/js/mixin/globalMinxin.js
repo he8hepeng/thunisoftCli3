@@ -36,16 +36,19 @@ export default {
                 _blolType = 'application/msword'
                 break
               case '.docx':
-                _blolType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                _blolType =
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
                 break
               case '.xlsx':
-                _blolType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                _blolType =
+                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
                 break
               case '.ppt':
                 _blolType = 'application/vnd.ms-powerpoint'
                 break
               case '.pptx':
-                _blolType = 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+                _blolType =
+                'application/vnd.openxmlformats-officedocument.presentationml.presentation'
                 break
               case '.zip':
                 _blolType = 'application/octet-stream;charset=utf-8'
@@ -69,13 +72,15 @@ export default {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
-          }).then(() => {
-            success()
-          }).catch(() => {
-            if (close) {
-              close()
-            }
           })
+            .then(() => {
+              success()
+            })
+            .catch(() => {
+              if (close) {
+                close()
+              }
+            })
         },
         /**
          * 消息 提示
@@ -126,9 +131,12 @@ export default {
           const that = this
 
           function changes(object, base) {
-            return that._.transform(object, function(result, value, key) {
+            return that._.transform(object, function (result, value, key) {
               if (!that._.isEqual(value, base[key])) {
-                result[key] = (that._.isObject(value) && that._.isObject(base[key])) ? changes(value, base[key]) : value
+                result[key] =
+                  that._.isObject(value) && that._.isObject(base[key])
+                    ? changes(value, base[key])
+                    : value
               }
             })
           }

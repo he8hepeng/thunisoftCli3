@@ -17,8 +17,7 @@ export default {
       return state.userId
     }
   },
-  mutations: {
-  },
+  mutations: {},
   actions: {
     clearCookie() {
       cookies.deleteCookie('token')

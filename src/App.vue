@@ -19,7 +19,7 @@ export default {
   data() {
     return {
       moment,
-      Zhcn,
+      Zhcn
     }
   },
   mounted() {
@@ -28,7 +28,7 @@ export default {
         this.$store.dispatch('setToken', this.$route.query.jwt)
       }
     }, 500)
-  },
+  }
 }
 </script>
 
