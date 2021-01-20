@@ -1,3 +1,10 @@
+/*
+ * @Author: HePeng
+ * @Description:
+ * @Date: 2021-01-04 20:12:25
+ * @LastEditors: HePeng
+ * @LastEditTime: 2021-01-20 21:25:55
+ */
 module.exports = {
   root: true,
   parserOptions: {
@@ -10,203 +17,336 @@ module.exports = {
     es6: true, // 设置所需检查代码为 es6 语法书写
     node: true
   },
-  extends: [
-    'plugin:vue/essential',
-    'standard',
-    'prettier'
-  ],
+  extends: ['plugin:vue/essential', 'standard', 'prettier'],
   plugins: ['vue', 'prettier'],
   rules: {
-    'generator-star-spacing': 'off',
+    // *
+    // * 【==== Possible Errors ====】
+    // * 这些规则与JavaScript代码中可能的错误或逻辑错误有关。
+    // */
+    // 强制"for"循环中更新子句的计算器朝着正确的方向移动
+    'for-direction': 2,
+    // 禁止function定义中出现重名参数
+    'no-dupe-args': 2,
+    // 禁止对象字面量中出现重复的key
+    'no-dupe-keys': 2,
+    // 禁止出现重复的case标签
+    'no-duplicate-case': 2,
+    // 禁止对catch子句的参数重新赋值
+    'no-ex-assign': 2,
+    // 禁止对关系运算符的左操作数使用否定操作符
+    'no-unsafe-negation': 2,
+    // 禁止出现令人困惑的多行表达式
+    'no-unexpected-multiline': 2,
+    // 禁止在return、throw、continue、break语句之后出现不可达代码
+    'no-unreachable': 2,
+    // 禁止在finally语句块中出现控制流语句
+    'no-unsafe-finally': 2,
+    // 要求使用isNaN()检查NaN
+    'use-isnan': 2,
+    // 强制typeof表达式与有效的字符串进行比较
+    'valid-typeof': 2,
+    // 还可以写表达式，厉害了~
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'prettier/prettier': 'error',
-    'vue/attribute-hyphenation': 0, // 忽略属性连字
-    'vue/max-attributes-per-line': [2, {
-      singleline: 10,
-      multiline: {
-        max: 1,
-        allowFirstLine: false
+    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    // *
+    // * 【==== Best Practices ====】
+    // * 这些规则是关于最佳实践的，帮助你避免一些问题。
+    // *
+    // 强制 getter 和 setter在对象中成对出现
+    'accessor-pairs': 2,
+    // 强制所有控制语句使用一致的括号风格
+    curly: [2, 'multi-line'],
+    // 强制在点号之前和之后一致的换行
+    'dot-location': [2, 'property'],
+    // 要求使用 ===和 !==
+    eqeqeq: [2, 'allow-null'],
+    // 禁用arguments.caller 或 arguments.callee
+    'no-caller': 2,
+    // 禁止使用空解构模式
+    'no-empty-pattern': 2,
+    // 禁止eval()
+    'no-eval': 2,
+    // 禁止使用类似eval()的方法
+    'no-implied-eval': 2,
+    // 禁止扩展原生类型
+    'no-extend-native': 2,
+    // 禁止不必要的.bind()调用
+    'no-extra-bind': 2,
+    // 禁止case语句落空
+    'no-fallthrough': 2,
+    // 禁止数字字面量中使用前导和末尾小数点
+    'no-floating-decimal': 2,
+    // 禁用__iterator__属性
+    'no-iterator': 2,
+    // 禁用标签语句
+    'no-labels': [
+      2,
+      {
+        allowLoop: false,
+        allowSwitch: false
       }
-    }], // 每行最大属性
-    // 'vue/singleline-html-element-content-newline': 'off', // 单行html元素内容在新的一行
-    // 'vue/multiline-html-element-content-newline': 'off', // 多行html元素内容在新的一行
-    // 'vue/html-closing-bracket-newline': 'off', // html右括号在新的一行
-    // 'vue/no-v-html': 'off', // 不使用v-html
-    'vue/html-self-closing': 0, // 忽略html标签自闭合
-    'accessor-pairs': 0, // 应同时设置setter和getter
-    'arrow-spacing': [2, {
-      before: true,
-      after: true
-    }], // 箭头间距
-    'vue/require-default-prop': 0, // 不检查默认属性
-    'vue/require-prop-types': 0, // 不检查默认类型
-    'block-spacing': [2, 'always'], // 块间距
-    'brace-style': [2, '1tbs', {
-      allowSingleLine: true
-    }], // 大括号样式允许单行
-    'camelcase': [2, {
-      properties: 'always'
-    }], // 为属性强制执行驼峰命名
-    'comma-dangle': [2, 'never'], // 逗号不使用悬挂
-    'comma-spacing': [2, {
-      before: false,
-      after: true
-    }], // 逗号间距
-    'comma-style': [2, 'last'], // （默认）与数组元素，对象属性或变量声明在同一行之后和同一行需要逗号
+    ],
+    // 禁用不必要嵌套块
+    'no-lone-blocks': 2,
+    // 禁止使用多个空格
+    'no-multi-spaces': 2,
+    // 禁止使用多行字符串
+    'no-multi-str': 2,
+    // 禁止对String，Number 和 Boolean 使用new操作符
+    'no-new-wrappers': 2,
+    // 禁用八进制字面量
+    'no-octal': 2,
+    // 禁止在字符串中使用八进制转义序列
+    'no-octal-escape': 2,
+    // 禁止使用__proto__属性
+    'no-proto': 2,
+    // 禁止多次声明同一变量
+    'no-redeclare': 2,
+    // 禁止在return语句中使用赋值语句
+    'no-return-assign': [2, 'except-parens'],
+    // 禁止自我赋值
+    'no-self-assign': 2,
+    // 禁止自我比较
+    'no-self-compare': 2,
+    // 禁用逗号操作符
+    'no-sequences': 2,
+    // 禁止抛出异常字面量
+    'no-throw-literal': 2,
+    // 禁止一成不变的循环条件
+    'no-unmodified-loop-condition': 2,
+    // 禁止不必要的.call()和.apply()
+    'no-useless-call': 2,
+    // 禁止不必要的转义字符
+    'no-useless-escape': 2,
+    // 禁用with语句
+    'no-with': 2,
+    // 要求IIFE使用括号括起来
+    'wrap-iife': 2,
+    // 要求或禁止Yoda条件。 if("red" === color) { //字面量在前，变量在后 }
+    yoda: [2, 'never'],
+    //  比较绝不能是Yoda条件（需要变量在前，字面量在后）
+    // *
+    // * 【==== ECMAScript 6 ====】
+    // * 这些规则只与ES6有关，即通常所说的ES2015。
+    // *
+    // 强制箭头函数前后使用一致的空格
+    'arrow-spacing': [
+      2,
+      {
+        before: true,
+        after: true
+      }
+    ],
+    // 要求在构造函数中有super()调用
     'constructor-super': 2,
-    'consistent-this': [2, 'that'], // 强制this别名为that
-    'curly': [2, 'multi-line'], // 当一个块只包含一条语句时，不允许省略花括号。
-    'dot-location': [2, 'property'], // 成员表达式中的点应与属性部分位于同一行
-    'eol-last': 2, // 强制文件以换行符结束（LF）
-    'eqeqeq': ['error', 'always', {
-      null: 'ignore'
-    }], // 强制使用全等
-    'generator-star-spacing': [2, {
-      before: true,
-      after: true
-    }], // 生成器中'*'两侧都要有间距
-    'global-require': 1, // 所有调用require()都位于模块的顶层
-    'indent': [2, 2, {
-      SwitchCase: 2
-    }], // 缩进风格
-    'key-spacing': [2, {
-      beforeColon: false,
-      afterColon: true
-    }], // 强制在对象字面量属性中的键和值之间保持一致的间距
-    'keyword-spacing': [2, {
-      before: true,
-      after: true
-    }], // 关键字如if/function等的间距
-    'new-cap': [2, {
-      newIsCap: true,
-      capIsNew: false
-    }], // 允许在没有new操作符的情况下调用大写启动的函数;（默认）要求new使用大写启动函数调用所有操作符
-    'new-parens': 2, // JavaScript通过new关键字调用函数时允许省略括号
-    'no-array-constructor': 1, // 不允许使用Array构造函数。除非要指定生成数组的长度
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off', // 只有开发环境可以使用console
-    'no-class-assign': 2, // 不允许修改类声明的变量
-    'no-const-assign': 2, // 不能修改使用const关键字声明的变量
-    'no-control-regex': 0, // 不允许正则表达式中的控制字符
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off', // 只有开发环境可以使用debugger
-    'no-delete-var': 2, // 不允许在变量上使用delete操作符
-    'no-dupe-args': 2, // 不允许在函数声明或表达式中使用重复的参数名称
-    'no-dupe-class-members': 2, // 不允许在类成员中使用重复的参数名称
-    'no-dupe-keys': 2, // 不允许在对象文字中使用重复键
-    'no-duplicate-case': 2, // 不允许在switch语句的case子句中使用重复的测试表达式
-    'no-empty-character-class': 2, // 不允许在正则表达式中使用空字符类
-    'no-empty-pattern': 2, // 不允许空块语句
-    'no-eval': 2, // 不允许使用eval
-    'no-ex-assign': 2, // 不允许在catch子句中重新分配例外
-    'no-extend-native': 2, // 不允许直接修改内建对象的原型
-    'no-extra-boolean-cast': 2, // 禁止不必要的布尔转换
-    'no-extra-parens': [2, 'functions'], // 仅在函数表达式附近禁止不必要的括号
-    'no-fallthrough': 2, // 消除一个案件无意中掉到另一个案件
-    'no-floating-decimal': 2, // 消除浮点小数点，并在数值有小数点但在其之前或之后缺少数字时发出警告
-    'no-func-assign': 2, // 允许重新分配function声明
-    'no-implied-eval': 2, // 消除隐含eval()
-    'no-inner-declarations': [2, 'functions'], // 不允许function嵌套块中的声明
-    'no-invalid-regexp': 2, // 不 允许RegExp构造函数中的无效正则表达式字符串
-    'no-irregular-whitespace': 2, // 捕获无效的空格
-    'no-iterator': 2, // 消除阴影变量声明
-    'no-label-var': 2, // 禁止创建与范围内的变量共享名称的标签
-    'no-labels': [2, {
-      allowLoop: false,
-      allowSwitch: false
-    }], // 消除 JavaScript 中使用带标签的语句
-    'no-lone-blocks': 2, // 消除脚本顶层或其他块中不必要的和可能混淆的块
-    'no-mixed-spaces-and-tabs': 2, // 不允许使用混合空格和制表符进行缩进
-    'no-multi-spaces': 0, // 禁止在逻辑表达式，条件表达式，声明，数组元素，对象属性，序列和函数参数周围使用多个空格
-    'no-multi-str': 2, // 防止使用多行字符串
-    'no-multiple-empty-lines': [2, {
-      max: 1
-    }], // 最多一个空行
-    'no-native-reassign': 2, // 不允许修改只读全局变量
-    'no-new-object': 2, // 不允许使用Object构造函数
-    'no-new-require': 2, // 消除new require表达的使用
-    'no-new-symbol': 2, // 防止Symbol与new 同时使用的意外错误
-    'no-new-wrappers': 2, // 杜绝使用String，Number以及Boolean与new操作
-    'no-obj-calls': 2, // 不允许调用Math，JSON和Reflect对象作为功能
-    'no-octal': 2, // 不允许使用八进制文字
-    'no-octal-escape': 2, // 不允许字符串文字中的八进制转义序列
-    'no-path-concat': 2, // 防止 Node.js 中的目录路径字符串连接无效
-    'no-redeclare': 2, // 消除在同一范围内具有多个声明的变量
-    'no-regex-spaces': 2, // 在正则表达式文字中不允许有多个空格
-    'no-return-assign': [2, 'except-parens'], // 消除return陈述中的任务，除非用括号括起来
-    'no-self-assign': 2, // 消除自我分配
-    'no-self-compare': 2, // 禁止比较变量与自身
-    'no-sequences': 2, // 禁止使用逗号运算符
-    'no-sparse-arrays': 2, // 不允许稀疏数组文字
-    'no-this-before-super': 2, // 在呼call前标记this/super关键字super()
-    'no-throw-literal': 2, // 不允许抛出不可能是Error对象的文字和其他表达式
-    'no-trailing-spaces': 2, // 不允许在行尾添加尾随空白
-    'no-undef': 2, // 任何对未声明的变量的引用都会导致错误
-    'no-undef-init': 2, // 消除初始化为undefined的变量声明
-    'no-underscore-dangle': 0, // 标识符不能以_开头或结尾
-    'no-unexpected-multiline': 2, // 不允许混淆多行表达式
-    'no-unmodified-loop-condition': 2, // 查找循环条件内的引用，然后检查这些引用的变量是否在循环中被修改
-    'no-unneeded-ternary': [2, {
-      defaultAssignment: false
-    }], // 不允许将条件表达式作为默认的分配模式
-    'no-unreachable': 2, // 不允许可达代码return，throw，continue，和break语句后面还有语句。
-    'no-unsafe-finally': 2, // 不允许return，throw，break，和continue里面的语句finally块
-    'no-unused-vars': [2, {
-      vars: 'all',
-      args: 'after-used'
-    }],
-    // 消除未使用的变量，函数和函数的参数
-    // vars: 'all' 检查所有变量的使用情况，包括全局范围内的变量。这是默认设置。 args: 'after-used' 只有最后一个参数必须使用。例如，这允许您为函数使用两个命名参数，并且只要您使用第二个参数，ESLint 就不会警告您第一个参数。这是默认设置。
-    'no-useless-call': 2, // 标记使用情况，Function.prototype.call()并且Function.prototype.apply()可以用正常的函数调用来替代
-    'no-useless-computed-key': 2, // 禁止不必要地使用计算属性键
-    'no-useless-constructor': 2, // 在不改变类的工作方式的情况下安全地移除的类构造函数
-    'no-useless-escape': 0, // 禁用不必要的转义字符
-    'no-whitespace-before-property': 2, // 如果对象的属性位于同一行上，不允许围绕点或在开头括号之前留出空白
-    'no-with': 2, // 禁用with
-    'no-var': 2, // 禁用var
-    'one-var': [2, {
-      initialized: 'never'
-    }], // 强制将变量声明为每个函数（对于var）或块（对于let和const）范围一起声明或单独声明。 initialized: 'never' 每个作用域要求多个变量声明用于初始化变量
-    'operator-linebreak': [2, 'after', {
-      overrides: {
-        '?': 'before',
-        ':': 'before'
+    // 强制generator函数中*号周围使用一致的空格
+    'generator-star-spacing': [
+      2,
+      {
+        before: true,
+        after: true
       }
-    }], // 实施一致的换行
-    'padded-blocks': [2, 'never'], // 在块内强制执行一致的空行填充
-    'prefer-destructuring': ['error', {
-      object: false,
-      array: false
-    }], // 此规则强制使用解构而不是通过成员表达式访问属性。
-    'quotes': [2, 'single', {
-      avoidEscape: true,
-      allowTemplateLiterals: true
-    }], // avoidEscape: true 允许字符串使用单引号或双引号，只要字符串包含必须以其他方式转义的引号 ;allowTemplateLiterals: true 允许字符串使用反引号
-    'radix': 2, // parseInt必须指定第二个参数
-    'semi': [2, 'never'], // 不使用分号
-    'semi-spacing': [2, {
-      before: false,
-      after: true
-    }], // 强制分号间隔
-    'space-before-blocks': [2, 'always'], // 块必须至少有一个先前的空间
-    // 'space-before-function-paren': [2, 'always'], // 在(参数后面不允许任何空格
-    'space-in-parens': [2, 'never'], // 禁止或要求（或）左边的一个或多个空格
-    'space-infix-ops': 2, // 强制二元运算符左右各有一个空格
-    'space-unary-ops': [2, {
-      words: true,
-      nonwords: false
-    }], // words: true 如：new，delete，typeof，void，yield 左右必须有空格 // nonwords: false 一元运算符，如：-，+，--，++，!，!!左右不能有空格
-    'spaced-comment': [2, 'always', {
-      markers: ['global', 'globals', 'eslint', 'eslint-disable', '*package', '!', ',']
-    }], // 注释开始后，此规则将强制间距的一致性//或/*
-    'template-curly-spacing': [2, 'never'], // 不允许大括号内的空格
-    'use-isnan': 2, // 禁止比较时使用NaN，只能用isNaN()
-    'valid-typeof': 2, // 必须使用合法的typeof的值
-    'wrap-iife': [2, 'any'], // 立即执行函数表达式的小括号风格
-    'yield-star-spacing': [2, 'both'], // 强制执行*周围 yield*表达式的间距，两侧都必须有空格
-    'yoda': [2, 'never'],
-    'prefer-const': 2, // 使用let关键字声明的变量，但在初始分配后从未重新分配变量，应改为const声明
-    'object-curly-spacing': [2, 'always', {
-      objectsInObjects: false
-    }], // 不允许以对象元素开始和/或以对象元素结尾的对象的大括号内的间距
-    'array-bracket-spacing': [2, 'never'] // 不允许数组括号内的空格
+    ],
+    // 禁止修改类声明的变量
+    'no-class-assign': 2,
+    // 禁止修改const声明的变量
+    'no-const-assign': 2,
+    // 禁止类成员中出现重复的名称
+    'no-dupe-class-members': 2,
+    // 禁止 Symbolnew 操作符和 new 一起使用
+    'no-new-symbol': 2,
+    // 禁止在构造函数中，在调用super()之前使用 this 或 super
+    'no-this-before-super': 2,
+    // 禁止在对象中使用不必要的计算属性
+    'no-useless-computed-key': 2,
+    // 禁止不必要的构造函数
+    'no-useless-constructor': 2,
+    // 禁止模板字符串中嵌入表达式周围空格的使用
+    'template-curly-spacing': [2, 'never'],
+    // 强制yield*表达式中的*周围使用空格
+    'yield-star-spacing': [2, 'both'],
+    // 要求使用const声明那些声明后不再被修改的变量
+    'prefer-const': 2,
+    // *
+    // * 【==== Stylistic Issues ====】
+    // * 这些规则是关于代码风格的。
+    // *
+    //  获取当前执行环境的上下文时，强制使用一致的命名（此处强制使用 'that'）。
+    'consistent-this': [2, 'that'],
+    // 禁止或强制在代码块中开括号前和闭括号后有空格  { return 11 }
+    'block-spacing': [2, 'always'],
+    // 强制在代码块中使用一致的大括号风格
+    'brace-style': [2, '1tbs', { allowSingleLine: true }],
+    // 强制使用驼峰拼写法命名规定
+    camelcase: [0, { properties: 'always' }],
+    // 要求或禁止末尾逗号
+    'comma-dangle': [2, 'never'],
+    // 强制在逗号前后使用一致的空格
+    'comma-spacing': [2, { before: false, after: true }],
+    // 强制在逗号前后使用一致的空格
+    'comma-style': [2, 'last'],
+    // 要求或禁止文件末尾存在空行
+    'eol-last': 2,
+    // 强制使用一致的缩进
+    indent: [2, 2, { SwitchCase: 1 }],
+    // 强制在JSX属性中一致地使用双引号或单引号
+    'jsx-quotes': [2, 'prefer-single'],
+    // 要求构造函数首字母大写
+    'new-cap': [2, { newIsCap: true, capIsNew: false }],
+    // 要求构造无参构造函数时有圆括号
+    'new-parens': 2,
+    // 禁用Array构造函数
+    'no-array-constructor': 2,
+    // 禁止空格和tab的混合缩进
+    'no-mixed-spaces-and-tabs': 2,
+    // 禁止出现多行空行
+    'no-multiple-empty-lines': [
+      2,
+      {
+        // 最大连续空行数
+        max: 2
+      }
+    ],
+    // 禁止在函数标识符和其调用之间有空格
+    'func-call-spacing': 2,
+    // 禁止行尾空格
+    'no-trailing-spaces': 2,
+    // 禁止可以在有更简单的可替代的表达式时使用三元操作符
+    'no-unneeded-ternary': [
+      2,
+      {
+        // 允许表达式作为默认的赋值模式
+        defaultAssignment: true
+      }
+    ],
+    // 禁止属性前有空白
+    'no-whitespace-before-property': 2,
+    // 强制函数中的变量要么一起声明要么分开声明
+    'one-var': [2, { initialized: 'never' }],
+    // 强制操作符使用一致的换行符
+    'operator-linebreak': [
+      2,
+      'after',
+      {
+        overrides: {
+          '?': 'before',
+          ':': 'before'
+        }
+      }
+    ],
+    // 要求或禁止块内填充
+    'padded-blocks': [2, 'never'],
+    // 强烈使用一致的反勾号``、双引号""或单引号''
+    quotes: [
+      2,
+      'single',
+      {
+        // 允许字符串使用单引号或者双引号，只要字符串中包含了一个其他引号，否则需要转义
+        avoidEscape: true,
+        // 允许字符串使用反勾号
+        allowTemplateLiterals: true
+      }
+    ],
+    // 禁止使用分号代替ASI(自动分号插入)
+    semi: [2, 'never'],
+    // 强制分号之前和之后使用一致的空格
+    'semi-spacing': [2, { before: false, after: true }],
+    // 强制在块之前使用一致的空格
+    'space-before-blocks': [2, 'always'],
+    // 强制在圆括号内使用一致的空格
+    'space-in-parens': [2, 'never'],
+    // 要求操作符周围有空格
+    'space-infix-ops': 2,
+    // 强制在一元操作符前后使用一致的空格
+    'space-unary-ops': [2, { words: true, nonwords: false }],
+    // 强制在注释// 或/*使用一致的空格
+    'spaced-comment': [
+      1,
+      'always',
+      {
+        markers: ['global', 'globals', 'eslint', 'eslint-disable', '*package', '!', ',']
+      }
+    ],
+    // 强制在大括号中使用一致的空格
+    'object-curly-spacing': [
+      2,
+      'always',
+      {
+        objectsInObjects: false
+      }
+    ],
+    // 禁止或强制在括号内使用空格
+    'array-bracket-spacing': [2, 'never'],
+    // 强制要求在对象字面量的属性中键和值之间使用一致的间距
+    'key-spacing': [
+      2,
+      {
+        beforeColon: false,
+        afterColon: true
+      }
+    ],
+    // *
+    // * 【==== Node.js and CommonJS ====】
+    // * 这些规则是关于Node.js 或 在浏览器中使用CommonJS的。
+    // *
+    // 要求回调函数中有容错处理
+    'handle-callback-err': [2, '^(err|error)$'],
+    // 禁止调用 require 时使用new操作符
+    'no-new-require': 2,
+    // 禁止对__dirname和__filename进行字符串连接
+    'no-path-concat': 1,
+    // 强制在function的左括号之前使用一致的空格
+    // 'space-before-function-paren': [2, 'always'],
+    // *
+    // * 【==== Possible Errors ====】
+    // * 这些规则与JavaScript代码中可能的错误或逻辑错误有关。
+    // *
+    // 禁止条件表达式中出现赋值操作符
+    'no-cond-assign': 2,
+    // 禁止在正则表达式中使用控制字符
+    'no-control-regex': 0,
+    // 禁止在正则表达式中使用空字符集
+    'no-empty-character-class': 2,
+    // 禁止不必要的布尔转换
+    'no-extra-boolean-cast': 2,
+    // 禁止不必要的括号
+    'no-extra-parens': [2, 'functions'],
+    // 禁止对function声明重新赋值
+    'no-func-assign': 2,
+    // 禁止在嵌套块中出现变量声明或function声明
+    'no-inner-declarations': [2, 'functions'],
+    // 禁止RegExp构造函数中存在无效的正则表达式字符串
+    'no-invalid-regexp': 2,
+    // 禁止在字符串和注释之外不规则的空白
+    'no-irregular-whitespace': 2,
+    // 禁止把全局对象作为函数调用
+    'no-obj-calls': 2,
+    // 禁止正则表达式字面量中出现多个空格
+    'no-regex-spaces': 2,
+    // 禁用稀疏数组
+    'no-sparse-arrays': 2,
+    // *
+    // * 【==== Variables ====】
+    // * 这些规则与变量声明有关。
+    // *
+    // 禁止删除变量
+    'no-delete-var': 2,
+    // 不允许标签与变量同名
+    'no-label-var': 2,
+    // 禁止将标识符定义为受限的名字
+    'no-shadow-restricted-names': 2,
+    // 禁止未声明的变量，除非它们在/*global */注释中被提到
+    'no-undef': 2,
+    // 禁止将变量初始化为undefined
+    'no-undef-init': 2,
+    // 禁止出现未使用的变量
+    'no-unused-vars': [2, { var: 'all', args: 'none' }],
+    // *
+    // * 【==== 配置定义在插件中的规则 ====】
+    // * 格式： 插件名/规则ID
+    // *
+    //
+    'vue/no-parsing-error': [2, { 'x-invalid-end-tag': false }]
   }
 }

@@ -4,4 +4,4 @@ vue.config.*
 .prettierrc
 .prettierignore
 vendor.dll
-!globalMinxin.*
+globalMinxin.*

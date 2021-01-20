@@ -1,13 +1,20 @@
+/*
+ * @Author: HePeng
+ * @Description:
+ * @Date: 2021-01-04 20:12:25
+ * @LastEditors: HePeng
+ * @LastEditTime: 2021-01-20 21:26:57
+ */
 import moment from 'moment'
 export default {
   // 格式化时间
-  _getTimeY(velue = new Date()) {
-    return moment(velue).format('YYYY-MM-DD')
+  getTimeY(timeDate = new Date()) {
+    return moment(timeDate).format('YYYY-MM-DD')
   },
-  _getTimeH(velue = new Date()) {
-    return moment(velue).format('h:mm:ss')
+  getTimeH(timeDate = new Date()) {
+    return moment(timeDate).format('h:mm:ss')
   },
-  _getSetTime(velue = 'YYYY-MM-DD h:mm:ss') {
-    return moment().format(velue)
+  getSetTime(timeDate = 'YYYY-MM-DD h:mm:ss') {
+    return moment().format(timeDate)
   }
 }

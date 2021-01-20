@@ -8,11 +8,28 @@ const webpack = require('webpack')
 const path = require('path')
 // const CompressionPlugin = require('compression-webpack-plugin') // 压缩css js html
 const IS_PROD = ['production', 'test'].includes(process.env.NODE_ENV) // 修复热更新
-// const TerserPlugin = require("terser-webpack-plugin"); // 去除console debug
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin') // 去除console debug
+const TerserPlugin = require('terser-webpack-plugin') // 去除console debug
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin') // 去除console debug
 const ZipPlugin = require('zip-webpack-plugin') // 当需要手动打包 会自动生成一个zip的dist
 // 选其一
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin') // dll优化
+// 代码gzip压缩
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const compress = new CompressionWebpackPlugin({
+  filename: (info) => {
+    return `${info.path}.gz${info.query}`
+  },
+  algorithm: 'gzip',
+  threshold: 10240,
+  test: new RegExp('\\.(' + ['js'].join('|') + ')$'),
+  minRatio: 0.8,
+  deleteOriginalAssets: false
+})
+// 生成分析文件
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// 打包进度条
+const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
+
 module.exports = {
   lintOnSave: true, // 是否lint检查 (建议开启)
   publicPath: './',
@@ -23,6 +40,13 @@ module.exports = {
   productionSourceMap: true, // false时 会加快您的打包速度 减小代码体积 但无法在控制台定位错误（慎用）
   // 当您测试使用下载时 请删除Mock依赖 (main.js vue.config.js) 他会影响您的下载功能
   devServer: {
+    before(app) {
+      app.get(/.*.(js)$/, (req, res, next) => {
+        req.url = req.url + '.gz'
+        res.set('Content-Encoding', 'gzip')
+        next()
+      })
+    },
     proxy: {
       // proxy all requests starting with /api to jsonplaceholder
       '/api': {
@@ -31,7 +55,7 @@ module.exports = {
         pathRewrite: {
           '^/api': '/' // 代理的路径
         },
-        onProxyReq: function(proxyReq, req) {
+        onProxyReq: function (proxyReq, req) {
           // 实在不知道代理后的路径，可以在这里打印出出来看看2
           console.log('原路径：' + req.originalUrl, '代理路径：' + req.path)
         }
@@ -41,13 +65,8 @@ module.exports = {
     port: '8080'
   },
   // 修复ie10 app.js报错问题
-  transpileDependencies: [
-    'normalize-url',
-    'mini-css-extract-plugin',
-    'prepend-http',
-    'sort-keys'
-  ], // 当您的依赖 需要通过babel显式转译时 放到这里
-  chainWebpack: config => {
+  transpileDependencies: ['normalize-url', 'mini-css-extract-plugin', 'prepend-http', 'sort-keys'], // 当您的依赖 需要通过babel显式转译时 放到这里
+  chainWebpack: (config) => {
     // 移除 prefetch preload 插件 提高打包速度
     config.plugins.delete('prefetch')
     config.plugins.delete('preload')
@@ -58,14 +77,20 @@ module.exports = {
       chunks: 'all'
     })
     const types = ['vue-modules', 'vue', 'normal-modules', 'normal']
-    types.forEach(type =>
-      addStyleResource(config.module.rule('less').oneOf(type))
-    )
+    types.forEach((type) => addStyleResource(config.module.rule('less').oneOf(type)))
     config.resolve.alias // 自定义目录别名
       .set('@', resolvePath('src'))
       .set('@assets', resolvePath('src/assets'))
       .set('@common', resolvePath('src/components/common')) // 公共模块
     config.resolve.symlinks(true)
+    config.module
+      .rule('images')
+      .use('image-webpack-loader')
+      .loader('image-webpack-loader')
+      .options({
+        bypassOnDebug: true
+      })
+      .end()
   },
   css: {
     loaderOptions: {
@@ -76,8 +101,10 @@ module.exports = {
     extract: IS_PROD, // 是否将组件中的 CSS 提取至一个独立的 CSS 文件中 (而不是动态注入到 JavaScript 中的 inline 代码)。 生产环境下是 true，开发环境下是 false
     sourceMap: false // 是否为 CSS 开启 source map。设置为 true 之后可能会影响构建的性能。
   },
-  configureWebpack: config => {
+  configureWebpack: (config) => {
     config.plugins.push(
+      compress,
+      new SimpleProgressWebpackPlugin(),
       // （全局引用 引用后不在页面import）
       new webpack.ProvidePlugin({
         // Snap: 'imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js',
@@ -105,16 +132,36 @@ module.exports = {
     )
     if (IS_PROD) {
       config.plugins.push(
-        new UglifyJsPlugin({
-          uglifyOptions: {
+        // new UglifyJsPlugin({
+        //   uglifyOptions: {
+        //     compress: {
+        //       drop_debugger: true,
+        //       drop_console: true // 生产环境自动删除console
+        //     },
+        //     warnings: false
+        //   },
+        //   sourceMap: false,
+        //   parallel: true // 使用多进程并行运行来提高构建速度。默认并发运行数：os.cpus().length - 1。
+        // })
+        new TerserPlugin({
+          terserOptions: {
+            ecma: undefined,
+            warnings: false,
+            parse: {},
             compress: {
-              drop_debugger: true,
-              drop_console: true // 生产环境自动删除console
-            },
-            warnings: false
-          },
-          sourceMap: false,
-          parallel: true // 使用多进程并行运行来提高构建速度。默认并发运行数：os.cpus().length - 1。
+              drop_console: true,
+              drop_debugger: false,
+              pure_funcs: ['console.log'] // 移除console
+            }
+          }
+        })
+      )
+    } else {
+      config.plugins.push(
+        // 生成分析日志
+        new BundleAnalyzerPlugin({
+          analyzerPort: 8888,
+          generateStatsFile: false
         })
       )
     }
@@ -122,7 +169,8 @@ module.exports = {
 }
 
 function addStyleResource(rule) {
-  rule.use('style-resource')
+  rule
+    .use('style-resource')
     .loader('style-resources-loader')
     .options({
       patterns: [
